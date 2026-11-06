@@ -531,6 +531,41 @@ a:focus-visible {
   opacity: .7;
 }
 
+/* ---------- Этапы ---------- */
+.steps {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(20px, 3vw, 36px);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.step {
+  padding-top: 18px;
+  border-top: 1px solid var(--border);
+}
+
+.step__num {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 11px;
+  letter-spacing: .22em;
+  color: var(--gold-dark);
+}
+
+.step h3 {
+  margin: 10px 0 8px;
+  font-size: 1.15rem;
+}
+
+.step p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--body);
+}
+
 /* ---------- Запись ---------- */
 .signup {
   display: grid;
@@ -769,7 +804,7 @@ a:focus-visible {
     max-width: 520px;
   }
 
-  .reviews {
+  .steps {
     grid-template-columns: 1fr;
     max-width: 600px;
   }
