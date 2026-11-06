@@ -319,7 +319,7 @@ a:focus-visible {
 
 .portrait__inner {
   position: relative;
-  aspect-ratio: 4 / 5;
+  aspect-ratio: 1 / 1;
   overflow: hidden;
   border-radius: var(--radius);
   background-color: var(--green-800);
