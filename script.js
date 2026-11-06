@@ -6,6 +6,9 @@
   const phoneInput = document.getElementById('phone');
   const nameError = document.getElementById('name-error');
   const phoneError = document.getElementById('phone-error');
+  const consent = document.getElementById('consent');
+  const consentError = document.getElementById('consent-error');
+  const consentLabel = consent.closest('.consent');
   const submitBtn = form.querySelector('button[type="submit"]');
 
   /* ---------- Маска телефона: +7 (999) 123-45-67 ---------- */
@@ -73,6 +76,18 @@
     return setError(phoneInput, phoneError, '');
   }
 
+  function validateConsent() {
+    const message = consent.checked ? '' : 'Отметьте согласие на обработку персональных данных.';
+    consentError.textContent = message;
+    consent.setAttribute('aria-invalid', message ? 'true' : 'false');
+    consentLabel.classList.toggle('is-invalid', Boolean(message));
+    return !message;
+  }
+
+  consent.addEventListener('change', () => {
+    if (consent.checked) validateConsent();
+  });
+
   nameInput.addEventListener('blur', validateName);
   phoneInput.addEventListener('blur', validatePhone);
 
@@ -86,9 +101,12 @@
 
     const nameOk = validateName();
     const phoneOk = validatePhone();
+    const consentOk = validateConsent();
 
-    if (!nameOk || !phoneOk) {
-      (nameOk ? phoneInput : nameInput).focus();
+    if (!nameOk || !phoneOk || !consentOk) {
+      if (!nameOk) nameInput.focus();
+      else if (!phoneOk) phoneInput.focus();
+      else consent.focus();
       return;
     }
 
@@ -112,8 +130,11 @@
     form.reset();
     nameInput.removeAttribute('aria-invalid');
     phoneInput.removeAttribute('aria-invalid');
+    consent.removeAttribute('aria-invalid');
+    consentLabel.classList.remove('is-invalid');
     nameError.textContent = '';
     phoneError.textContent = '';
+    consentError.textContent = '';
     success.hidden = true;
     body.hidden = false;
     nameInput.focus();

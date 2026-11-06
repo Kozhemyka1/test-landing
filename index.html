@@ -269,10 +269,19 @@
                   <p class="field__error" id="phone-error" role="alert"></p>
                 </div>
 
+                <label class="consent" for="consent">
+                  <input type="checkbox" id="consent" name="consent" aria-describedby="consent-error">
+                  <span>
+                    Согласен(-на) на обработку персональных данных в соответствии
+                    с <a href="privacy.html" target="_blank" rel="noopener">политикой</a>
+                  </span>
+                </label>
+                <p class="field__error" id="consent-error" role="alert"></p>
+
                 <button class="btn btn--primary btn--block" type="submit">Записаться на урок</button>
 
                 <p class="form__note">
-                  Нажимая кнопку, вы соглашаетесь на обработку персональных данных.
+                  Данные используются только для связи по заявке и не передаются третьим лицам.
                 </p>
               </div>
 
@@ -301,6 +310,7 @@
         <a href="#about">О репетиторе</a>
         <a href="#formats">Занятия</a>
         <a href="#signup">Записаться</a>
+        <a href="privacy.html">Политика</a>
       </nav>
 
       <p class="footer__copy">© 2026 · Все права защищены</p>

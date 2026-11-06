@@ -685,6 +685,42 @@ a:focus-visible {
   margin-top: 6px;
 }
 
+/* Согласие на обработку данных */
+.consent {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin: 2px 0 6px;
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--body);
+  cursor: pointer;
+}
+
+.consent input {
+  flex: none;
+  width: 16px;
+  height: 16px;
+  margin: 2px 0 0;
+  accent-color: var(--green-700);
+  cursor: pointer;
+}
+
+.consent a {
+  color: var(--green-700);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.consent a:hover {
+  color: var(--emerald);
+}
+
+.consent.is-invalid input {
+  outline: 2px solid #c2564a;
+  outline-offset: 2px;
+}
+
 .form__note {
   margin: 10px 0 0;
   font-size: 11px;
@@ -851,6 +887,62 @@ a:focus-visible {
     flex-wrap: wrap;
     gap: 10px 18px;
   }
+}
+
+/* ---------- Правовые страницы ---------- */
+.legal {
+  padding: clamp(36px, 4.5vw, 64px) 0 clamp(48px, 6vw, 80px);
+}
+
+.legal .container {
+  width: min(780px, 100% - 48px);
+}
+
+.legal h1 {
+  margin: 0 0 10px;
+  font-size: clamp(1.8rem, 3vw, 2.5rem);
+}
+
+.legal__meta {
+  margin: 0 0 8px;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.legal h2 {
+  margin: 36px 0 12px;
+  font-size: 1.2rem;
+  letter-spacing: 0;
+}
+
+.legal p,
+.legal li {
+  font-size: 14.5px;
+  line-height: 1.7;
+  color: var(--body);
+}
+
+.legal p {
+  margin: 0 0 12px;
+}
+
+.legal ul {
+  margin: 0 0 16px;
+  padding-left: 20px;
+}
+
+.legal li {
+  margin-bottom: 6px;
+}
+
+.legal a {
+  color: var(--green-700);
+}
+
+.fill {
+  padding: 0 3px;
+  background: rgba(227, 179, 91, .28);
+  border-bottom: 1px dashed var(--gold-dark);
 }
 
 @media (prefers-reduced-motion: reduce) {
