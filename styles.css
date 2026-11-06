@@ -451,14 +451,6 @@ a:focus-visible {
   color: var(--gold-dark);
 }
 
-.signature {
-  margin: 20px 0 0;
-  font-family: var(--font-display);
-  font-style: italic;
-  font-size: 1.25rem;
-  color: var(--gold-dark);
-}
-
 .quote {
   margin: 22px 0 0;
   padding-left: 18px;
