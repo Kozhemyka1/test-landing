@@ -1,5 +1,28 @@
 (() => {
+  /* ---------- Фото: показываем, только если файл на месте ---------- */
+  const portrait = document.querySelector('[data-portrait]');
+  if (portrait) {
+    const sources = ['photo.jpg', 'photo.jpeg', 'photo.png', 'photo.webp'];
+    let index = 0;
+
+    const tryNext = () => {
+      index += 1;
+      if (index < sources.length) {
+        portrait.src = sources[index];
+      } else {
+        portrait.remove();
+      }
+    };
+
+    portrait.addEventListener('error', tryNext);
+    if (portrait.complete && portrait.naturalWidth === 0) tryNext();
+  }
+
+  /* ---------- Форма записи ----------
+     Пока форма отключена (закомментирована в разметке), весь блок ниже не выполняется. */
   const form = document.getElementById('signup-form');
+  if (!form) return;
+
   const body = form.querySelector('.form__body');
   const success = form.querySelector('.form__success');
   const nameInput = document.getElementById('name');
@@ -139,25 +162,6 @@
     body.hidden = false;
     nameInput.focus();
   });
-
-  /* ---------- Фото: показываем, только если файл на месте ---------- */
-  const portrait = document.querySelector('[data-portrait]');
-  if (portrait) {
-    const sources = ['photo.jpg', 'photo.jpeg', 'photo.png', 'photo.webp'];
-    let index = 0;
-
-    const tryNext = () => {
-      index += 1;
-      if (index < sources.length) {
-        portrait.src = sources[index];
-      } else {
-        portrait.remove();
-      }
-    };
-
-    portrait.addEventListener('error', tryNext);
-    if (portrait.complete && portrait.naturalWidth === 0) tryNext();
-  }
 
   /* ---------- CTA: фокус на форме ---------- */
   document.querySelectorAll('[data-focus-form]').forEach((link) => {

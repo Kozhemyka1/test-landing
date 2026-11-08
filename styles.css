@@ -292,18 +292,17 @@ a:focus-visible {
   margin-bottom: 16px;
 }
 
-.formats__price {
-  margin: 18px 0 0;
-  font-size: 13.5px;
-  color: var(--muted);
+.signup__cta {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
-.formats__price strong {
-  margin-right: 4px;
-  font-family: var(--font-display);
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: var(--ink);
+.signup__cta p {
+  margin: 0 0 8px;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--body);
 }
 
 /* Портрет */
@@ -462,14 +461,14 @@ a:focus-visible {
 /* ---------- Форматы ---------- */
 .cards {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
 }
 
 .card {
   display: flex;
   flex-direction: column;
-  padding: 24px 22px;
+  padding: 22px 20px;
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius);
@@ -480,13 +479,6 @@ a:focus-visible {
   border-color: var(--emerald);
   box-shadow: 0 10px 30px -18px rgba(14, 42, 32, .45);
   transform: translateY(-2px);
-}
-
-.card--featured {
-  border-color: rgba(31, 122, 92, .5);
-  background:
-    linear-gradient(180deg, rgba(31, 122, 92, .05), transparent 55%),
-    var(--surface);
 }
 
 .card__num {
@@ -505,9 +497,27 @@ a:focus-visible {
 }
 
 .card__list {
-  margin: 0;
+  margin: 0 0 18px;
   padding: 0;
   list-style: none;
+}
+
+.card__price {
+  margin: auto 0 0;
+  padding-top: 16px;
+  border-top: 1px solid var(--border-soft);
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.card__price span {
+  display: block;
+  margin-top: 3px;
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: .04em;
+  color: var(--muted);
 }
 
 .card__list li {
@@ -833,8 +843,8 @@ a:focus-visible {
   }
 
   .cards {
-    grid-template-columns: 1fr;
-    max-width: 520px;
+    grid-template-columns: repeat(2, 1fr);
+    max-width: 720px;
   }
 
   .steps {
@@ -866,6 +876,11 @@ a:focus-visible {
 @media (max-width: 700px) {
   .container {
     width: min(var(--container), 100% - 32px);
+  }
+
+  .cards {
+    grid-template-columns: 1fr;
+    max-width: 520px;
   }
 
   .hero__actions .btn {
