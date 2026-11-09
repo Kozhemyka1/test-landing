@@ -292,19 +292,6 @@ a:focus-visible {
   margin-bottom: 16px;
 }
 
-.signup__cta {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.signup__cta p {
-  margin: 0 0 8px;
-  font-size: 14px;
-  line-height: 1.6;
-  color: var(--body);
-}
-
 /* Портрет */
 .portrait {
   position: relative;
@@ -518,17 +505,6 @@ a:focus-visible {
   font-weight: 400;
   letter-spacing: .04em;
   color: var(--muted);
-}
-
-.formats__note {
-  margin: 18px 0 0;
-  font-size: 13.5px;
-  color: var(--muted);
-}
-
-.formats__note strong {
-  font-weight: 700;
-  color: var(--ink);
 }
 
 .card__list li {

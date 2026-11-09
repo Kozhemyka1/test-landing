@@ -1,3 +1,13 @@
+/* ---------- Настройки отправки заявок ----------
+   Telegram-бот: создайте бота у @BotFather, вставьте токен ниже.
+   chat_id — ваш личный id (узнать можно у бота @userinfobot).
+   Пока поля пустые, форма открывает чат с готовым текстом заявки. */
+const TELEGRAM = {
+  token: '',
+  chatId: '',
+  fallbackChat: 'https://t.me/irinatumbusova',
+};
+
 (() => {
   /* ---------- Фото: показываем, только если файл на месте ---------- */
   const portrait = document.querySelector('[data-portrait]');
@@ -18,8 +28,7 @@
     if (portrait.complete && portrait.naturalWidth === 0) tryNext();
   }
 
-  /* ---------- Форма записи ----------
-     Пока форма отключена (закомментирована в разметке), весь блок ниже не выполняется. */
+  /* ---------- Форма записи ---------- */
   const form = document.getElementById('signup-form');
   if (!form) return;
 
@@ -31,8 +40,14 @@
   const phoneError = document.getElementById('phone-error');
   const consent = document.getElementById('consent');
   const consentError = document.getElementById('consent-error');
+  const formError = document.getElementById('form-error');
   const consentLabel = consent.closest('.consent');
   const submitBtn = form.querySelector('button[type="submit"]');
+
+  const successTitle = success.querySelector('h3');
+  const successText = success.querySelector('p');
+  const successTitleDefault = successTitle.textContent;
+  const successTextDefault = successText.textContent;
 
   /* ---------- Маска телефона: +7 (999) 123-45-67 ---------- */
   function formatPhone(raw) {
@@ -118,9 +133,62 @@
     if (nameInput.getAttribute('aria-invalid') === 'true') validateName();
   });
 
-  /* ---------- Отправка ---------- */
-  form.addEventListener('submit', (event) => {
+  /* ---------- Отправка заявки ---------- */
+  function buildMessage(lead) {
+    return [
+      'Новая заявка с сайта',
+      '',
+      'ФИО: ' + lead.name,
+      'Телефон: ' + lead.phone,
+      'Время: ' + new Date().toLocaleString('ru-RU'),
+    ].join('\n');
+  }
+
+  async function sendLead(lead) {
+    const text = buildMessage(lead);
+
+    if (TELEGRAM.token && TELEGRAM.chatId) {
+      const response = await fetch(
+        'https://api.telegram.org/bot' + TELEGRAM.token + '/sendMessage',
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            chat_id: TELEGRAM.chatId,
+            text,
+            disable_web_page_preview: true,
+          }),
+        }
+      );
+
+      if (!response.ok) throw new Error('Telegram: ' + response.status);
+      return 'sent';
+    }
+
+    // Без токена — открываем чат с готовым текстом заявки
+    window.open(
+      TELEGRAM.fallbackChat + '?text=' + encodeURIComponent(text),
+      '_blank',
+      'noopener'
+    );
+    return 'opened';
+  }
+
+  function showSuccess(mode) {
+    successTitle.textContent = mode === 'opened' ? 'Остался один шаг' : successTitleDefault;
+    successText.textContent =
+      mode === 'opened'
+        ? 'Telegram открылся в новой вкладке — отправьте сообщение, и я отвечу в течение дня.'
+        : successTextDefault;
+
+    body.hidden = true;
+    success.hidden = false;
+    successTitle.focus();
+  }
+
+  form.addEventListener('submit', async (event) => {
     event.preventDefault();
+    formError.textContent = '';
 
     const nameOk = validateName();
     const phoneOk = validatePhone();
@@ -136,16 +204,20 @@
     submitBtn.disabled = true;
     submitBtn.textContent = 'Отправляем…';
 
-    // Здесь можно подключить отправку на сервер:
-    // fetch('/api/signup', { method: 'POST', body: new FormData(form) })
-
-    setTimeout(() => {
-      body.hidden = true;
-      success.hidden = false;
-      success.querySelector('h2, h3').focus();
+    try {
+      const mode = await sendLead({
+        name: nameInput.value.trim(),
+        phone: phoneInput.value.trim(),
+      });
+      showSuccess(mode);
+    } catch (error) {
+      formError.textContent =
+        'Не удалось отправить заявку. Попробуйте ещё раз или напишите в Telegram: @irinatumbusova.';
+      console.error(error);
+    } finally {
       submitBtn.disabled = false;
       submitBtn.textContent = 'Записаться';
-    }, 500);
+    }
   });
 
   /* ---------- Новая заявка ---------- */
@@ -158,6 +230,9 @@
     nameError.textContent = '';
     phoneError.textContent = '';
     consentError.textContent = '';
+    formError.textContent = '';
+    successTitle.textContent = successTitleDefault;
+    successText.textContent = successTextDefault;
     success.hidden = true;
     body.hidden = false;
     nameInput.focus();
