@@ -931,6 +931,34 @@ a:focus-visible {
   color: var(--green-700);
 }
 
+.legal__table-wrap {
+  margin: 0 0 16px;
+  overflow-x: auto;
+}
+
+.legal__table {
+  width: 100%;
+  min-width: 560px;
+  border-collapse: collapse;
+  font-size: 13.5px;
+  line-height: 1.5;
+}
+
+.legal__table th,
+.legal__table td {
+  padding: 10px 12px;
+  text-align: left;
+  vertical-align: top;
+  color: var(--body);
+  border: 1px solid var(--border);
+}
+
+.legal__table th {
+  font-weight: 600;
+  color: var(--ink);
+  background: rgba(31, 122, 92, .05);
+}
+
 .fill {
   padding: 0 3px;
   background: rgba(227, 179, 91, .28);
