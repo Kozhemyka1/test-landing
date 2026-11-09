@@ -1,8 +1,10 @@
 /* ---------- Настройки отправки заявок ----------
-   Telegram-бот: создайте бота у @BotFather, вставьте токен ниже.
-   chat_id — ваш личный id (узнать можно у бота @userinfobot).
-   Пока поля пустые, форма открывает чат с готовым текстом заявки. */
+   1) endpoint — адрес вашего сервера или прокси, он сам перешлёт заявку
+      в Telegram. Токен в этом случае живёт на сервере и в коде его нет.
+   2) token + chatId — прямая отправка через Bot API (токен виден в коде).
+   3) Если ничего не задано — форма откроет чат с готовым текстом заявки. */
 const TELEGRAM = {
+  endpoint: '',
   token: '',
   chatId: '',
   fallbackChat: 'https://t.me/irinatumbusova',
@@ -146,6 +148,17 @@ const TELEGRAM = {
 
   async function sendLead(lead) {
     const text = buildMessage(lead);
+
+    if (TELEGRAM.endpoint) {
+      const response = await fetch(TELEGRAM.endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...lead, text }),
+      });
+
+      if (!response.ok) throw new Error('Endpoint: ' + response.status);
+      return 'sent';
+    }
 
     if (TELEGRAM.token && TELEGRAM.chatId) {
       const response = await fetch(
