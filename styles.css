@@ -829,16 +829,6 @@ a:focus-visible {
     gap: 24px;
   }
 
-  .cards {
-    grid-template-columns: 1fr;
-    max-width: 520px;
-  }
-
-  .steps {
-    grid-template-columns: 1fr;
-    max-width: 600px;
-  }
-
   .signup {
     grid-template-columns: 1fr;
   }
@@ -867,7 +857,10 @@ a:focus-visible {
 
   .cards {
     grid-template-columns: 1fr;
-    max-width: 520px;
+  }
+
+  .steps {
+    grid-template-columns: 1fr;
   }
 
   .hero__actions .btn {
